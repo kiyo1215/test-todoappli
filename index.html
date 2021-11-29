@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <todo></todo>
+    <form v-on:submit.prevent>
+      <label>タスク名：<input type="text" v-model="newTask"></label>
+      <label>推定時間(分）：<input type="number" v-model="newTime"></label><br>
+      <button type="submit" v-on:click="add">追加</button>
+    </form>
+    <table>
+      <tr>
+          <!-- <th style="padding-right: 50px;"><todo :th-Task='task'></todo></th> -->
+          <th style="padding-right: 50px;">タスク</th>
+          <!-- <th><todo :th-Time='time'></todo></th> -->
+          <th>推定時間（分）</th>
+       </tr>
+      <tr v-for="todo in todos">
+        <th style="padding-right: 50px;">{{todo.task}}</th>
+        <th >{{todo.time}}分</th>
+      </tr>
+    </table>
+  </div>
+
+<script>
+  Vue.component('todo', {
+    // props: {
+    //   thTask: {
+    //     type: String
+    //   },
+    //   thTime: {
+    //     type: String
+    //   }
+    // },
+    template: '<h2>TODOアプリ</h2>',
+    })
+  const app = new Vue({
+      el: '#app',
+      data: {
+        newTask: "",
+        newTime: "",
+        todos: [],
+        // task: 'タスク',
+        // time: '推定時間（分）'
+      },
+      methods: {
+        add: function (event) {
+          if (this.newTask == '') return;
+          if (this.newTime == '') return;
+          let todo = {
+            task: this.newTask,
+            time: this.newTime
+          };
+          this.todos.push(todo);
+          this.newTask = '',
+          this.newTime = ''
+        }
+      }
+    })
+
+</script>
+</body>
+</html>
